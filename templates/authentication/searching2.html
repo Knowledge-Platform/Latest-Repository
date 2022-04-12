@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <style>
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+            display: inline-block;
+            margin: 25px 25px 25px 25px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        }
+        
+        .flip-card-back {
+            background-color: #ffffff;
+            color: #000000;
+            transform: rotateY(180deg);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #F3F3F3;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-family: "Comic Sans MS";
+            color: #00a0ff;
+        }
+        
+        header {
+            font-family: "Comic Sans MS";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            color: #00a0ff;
+            background-color: #EEE;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        main .list {
+            width: 100%;
+            max-width: 768px;
+            background-color: #FFF;
+            border: 2px solid #00a0ff;
+            border-radius: 5%;
+            margin-top: 25px;
+        }
+        
+        main .list .item {
+            padding: 15px;
+            border-bottom: 1px solid #CCC;
+        }
+        
+        main .list .item:last-of-type {
+            border-bottom: none;
+        }
+        
+        main .list .item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .pagenumbers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .pagenumbers button {
+            width: 50px;
+            height: 50px;
+            appearance: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background-color: #0096FF;
+            margin: 5px;
+            transition: 0.4s;
+            color: #FFF;
+            font-size: 18px;
+            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pagenumbers button:hover {
+            background-color: blue;
+        }
+        
+        .pagenumbers button.active {
+            background-color: blue;
+            box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type=checkbox] {
+            transform: scale(1.5);
+        }
+        
+        .flex-parent-element {
+            display: flex;
+            width: 100%;
+        }
+        
+        .flex-child-element1 {
+            flex: 1;
+            border: 2px solid #00a0ff;
+            margin-left: 1px;
+            margin-right: 0px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+        
+        .flex-child-element2 {
+            flex: 3.5;
+            border: 2px solid #00a0ff;
+            margin: 2px;
+            margin-left: 0px;
+            margin-right: 1px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+        
+        #searchbar {
+            margin-top: 3px;
+            margin-left: 15%;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        input[type=text] {
+            width: 50%;
+            -webkit-transition: width 0.15s ease-in-out;
+            transition: width 0.15s ease-in-out;
+        }
+        /* When the input field gets focus,
+            change its width to 100% */
+        
+        input[type=text]:focus {
+            width: 70%;
+        }
+        
+        #list {
+            font-size: 1.5em;
+            list-style: none;
+        }
+        
+        .animals {
+            display: inline;
+        }
+        
+        section {
+            background: linear-gradient( rgba(0, 160, 255, 0.5) 100%, rgba(0, 144, 229, 0.5) 100%), url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+            padding: 30px 20px;
+        }
+        
+        .dashboard-cards {
+            position: relative;
+            padding-bottom: 50px;
+            margin: 0 !important;
+        }
+        
+        .dashboard-cards .card {
+            background: #ffffff;
+            display: inline-block;
+            -webkit-perspective: 1000;
+            perspective: 1000;
+            z-index: 20;
+            padding: 0 !important;
+            margin: 5px 5px 10px 5px;
+            position: relative;
+            text-align: left;
+            transition: all 0.3s 0s ease-in;
+            z-index: 1;
+            width: calc(33.33333333% - 10px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-cards .card:hover {
+            box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-cards .card .card-title {
+            background: #ffffff;
+            padding: 20px 15px;
+            position: relative;
+            z-index: 0;
+        }
+        
+        .dashboard-cards .card .card-title h2 {
+            font-size: 24px;
+            letter-spacing: -0.05em;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .dashboard-cards .card .card-title h2 small {
+            display: block;
+            font-size: 14px;
+            margin-top: 8px;
+            letter-spacing: -0.025em;
+        }
+        
+        .dashboard-cards .card .card-description {
+            position: relative;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            padding: 10px 15px 0 15px;
+        }
+        
+        .dashboard-cards .card .card-actions {
+            box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.075);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .dashboard-cards .card .card-flap {
+            background: #d9d9d9;
+            position: absolute;
+            width: 100%;
+            -webkit-transform-origin: top;
+            transform-origin: top;
+            -webkit-transform: rotateX(-90deg);
+            transform: rotateX(-90deg);
+        }
+        
+        .dashboard-cards .card .flap1 {
+            transition: all 0.3s 0.3s ease-out;
+            z-index: -1;
+        }
+        
+        .dashboard-cards .card .flap2 {
+            transition: all 0.3s 0s ease-out;
+            z-index: -2;
+        }
+        
+        .dashboard-cards.showing .card {
+            cursor: pointer;
+            opacity: 0.6;
+            -webkit-transform: scale(0.88);
+            transform: scale(0.88);
+        }
+        
+        .dashboard-cards .no-touch .dashboard-cards.showing .card:hover {
+            opacity: 0.94;
+            -webkit-transform: scale(0.92);
+            transform: scale(0.92);
+        }
+        
+        .dashboard-cards .card.d-card-show {
+            opacity: 1 !important;
+            -webkit-transform: scale(1) !important;
+            transform: scale(1) !important;
+        }
+        
+        .dashboard-cards .card.d-card-show .card-flap {
+            background: #ffffff;
+            -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+        }
+        
+        .dashboard-cards .card.d-card-show .flap1 {
+            transition: all 0.3s 0s ease-out;
+        }
+        
+        .dashboard-cards .card.d-card-show .flap2 {
+            transition: all 0.3s 0.2s ease-out;
+        }
+        
+        .dashboard-cards .card .task-count {
+            width: 60px;
+            height: 40px;
+            position: absolute;
+            top: 22px;
+            right: 10px;
+            background: #ffffff;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 100%;
+            color: #00a0ff;
+            font-weight: 600;
+            transition: all .2s ease;
+        }
+        
+        .dashboard-cards .task-list {
+            padding: 0 !important;
+        }
+        
+        .dashboard-cards .task-list li {
+            padding: 10px 0;
+            padding-left: 10px;
+            margin: 3px 0;
+            list-style-type: none;
+            border-bottom: 1px solid #e9ebed;
+            border-left: 3px solid #00a0ff;
+            transition: all .2s ease;
+        }
+        
+        .dashboard-cards .task-list li:hover {
+            background: #ecf0f1;
+            transition: all .2s ease;
+        }
+        
+        .dashboard-cards .task-list li span {
+            float: right;
+            color: #00a0ff;
+            margin-right: 5px;
+        }
+        
+        .dashboard-cards.showing .card.d-card-show .task-count {
+            color: #00a0ff;
+            background: #ffffff;
+            transition: all .2s ease;
+        }
+        
+        .dashboard-cards .card-actions .btn {
+            color: #ffffff;
+        }
+        
+        .dashboard-cards .card-actions .btn:hover {
+            color: #ff3a3a;
+        }
+        
+        @media (max-width:750px) {
+            .dashboard-cards .card {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+        
+        .mytile {
+            display: block;
+            width: 250%;
+            margin-left: 15%;
+        }
+    </style>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel="icon" href="https://klaindustries.com/wp-content/uploads/2017/07/Light-bulb-icon.png" width="300" height="300" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Knowledge Platform</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/contribute">Contribute</a></li>
+                <li><a href="jira">Jira</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user">Hello,{{request.user.get_full_name}}</a></span>
+                </li>
+                <li><a href="signout"><span class=""></span> Sign Out</a></li>
+
+                <li><a href="/your_contribution" name="contri"> Your Contributions</a></li>
+                <li><a id="change-password" href="/change_password_form">Change Password</a></li>
+
+            </ul>
+
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            </ul>
+            {% endif %}
+
+        </div>
+    </nav>
+    
+    <div class="flex-parent-element">
+      <div class="flex-child-element1 ">
+        <form class="form-inline my-2 my-lg-0" method=POST  >
+          {%csrf_token%}
+          <input id="searchbar" onkeyup="search_animal()" type="text" name="search" placeholder="Search Tags..">
+        </form>
+        <form class="form-inline my-2 my-lg-0" method=POST  >
+          {%csrf_token%}
+            <ul id='list'>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary" name="1" value="replace">Replace</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">svg</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary"  name="1" value="connect">Connect</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary" name="1" value="tables" >Tables</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">CData</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">Driver</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">neo4j</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">Jira</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">IPaas</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">ArcEsb</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">Sync</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">Server</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">automate</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">integrate</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary" >Java</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">Python</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">sql</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">cypher</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">.net</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">cloud</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">odbc</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary" name="1" value="jdbc">jdbc</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">saas</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">delphi</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">sdk</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">tableau</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">ado.net</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary" name="1" value="ssis" >ssis</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">zoho</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">salesforce</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">freshdesk</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">opportunity</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">defect</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">enhancement</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">support</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">api</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">adp</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">aws</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">azure</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">crm</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">amazon</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">mongo</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">mongodb</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">cassandra</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">dropbox</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">graphql</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">bigdata</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">hadoop</button></li>
+                <li class="animals"><button style="margin:5px" class="btn btn-primary">sap</button></li>
+            </ul>
+          </form>
+            <br>
+            <hr>
+            <center>
+                <h5>Knowledge Type</h5>
+            </center>
+            <form class="form-inline my-2 my-lg-0" method=POST  >
+              {%csrf_token%}
+                <input type="checkbox" style="float: right; margin:8px" id="defect" name="defect" value="Defect">
+                <label for="defect"> Defect</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="enhancement" name="enhancement" value="Enhancement">
+                <label for="enhancement"> Enhancement</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="support" name="support" value="Support">
+                <label for="support"> Support</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="product" name="product" value="Product">
+                <label for="product"> Opportunity</label><br>
+                <hr>
+
+            </form>
+
+            <center>
+                <h5>Products</h5>
+            </center>
+
+            <hr>
+
+            <form class="form-inline my-2 my-lg-0" method=POST  >
+              {%csrf_token%}
+                <input type="checkbox" style="float: right; margin:8px" id="product1" name="product1" value="Product1">
+                <label for="product1"> Cdata Drivers</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="product2" name="product2" value="Product2">
+                <label for="product2"> Cdata ArcESB</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="product3" name="product3" value="Product3">
+                <label for="product3"> Cdata Connect</label><br>
+                <hr>
+                <input type="checkbox" style="float: right; margin:8px" id="product4" name="product4" value="Product4">
+                <label for="product4"> Cdata Sync</label><br>
+                <hr>
+
+            </form>
+        </div>
+        <div class="flex-child-element2 ">
+            <section>
+                <a class="nav-link" href="/" style="color:white ; width:200% ; height:200% ;"><strong><i class="fa fa-fw fa-home"></i>Home</strong><span class="sr-only">(current)</span></a>
+                <br><br>
+                <div class="search-container" style="display:inline" ;>
+                    <form action="">
+                        <input type="text" placeholder="Search..." name="search" id="searchitem" onkeyup="search_kp()">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+
+                    </form>
+
+                </div>
+                <br><br>
+
+                <div class='row dashboard-cards'>
+
+
+
+                    {% for x in defectdata %}
+                    <div class='mytile'>
+                        <div class='card col-md '>
+
+
+                            <div class='card-title'>
+                                <h2>
+                                    {{x.node.psummary}}
+                                    <small>{{x.ptype}}</small>
+                                </h2>
+                                <div class='task-count'>
+                                    <small> {{x.node.id}}</small>
+                                </div>
+                            </div>
+
+                            <div class='card-flap flap1'>
+                                <div class='card-description'>
+                                    <ul class='task-list'>
+                                        <li>
+                                            {{x.node.pdescription}}
+                                            <span>Problem Description</span>
+                                        </li>
+                                        <li>
+                                            {{x.node.kanalysis}}
+                                            <span>Knowledge Analysis</span>
+                                        </li>
+                                        <li>
+                                            {{x.node.kinsisghts}}
+                                            <span>Knowledge Insights</span>
+                                        </li>
+                                        <li>
+                                            {{x.node.owner}}
+                                            <span>Owner</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+        </div>
+    </div>
+    <script>
+        function search_animal() {
+            let input = document.getElementById('searchbar').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('animals');
+
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                } else {
+                    x[i].style.display = "inline";
+                }
+            }
+        }
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+    </script>
+    <script>
+        $(document).ready(function() {
+            var zindex = 10;
+
+            $("div.card").click(function(e) {
+                e.preventDefault();
+
+                var isShowing = false;
+
+                if ($(this).hasClass("d-card-show")) {
+                    isShowing = true
+                }
+
+                if ($("div.dashboard-cards").hasClass("showing")) {
+                    $("div.card.d-card-show")
+                        .removeClass("d-card-show");
+
+                    if (isShowing) {
+                        $("div.dashboard-cards")
+                            .removeClass("showing");
+                    } else {
+                        $(this)
+                            .css({
+                                zIndex: zindex
+                            })
+                            .addClass("d-card-show");
+
+                    }
+
+                    zindex++;
+
+                } else {
+                    $("div.dashboard-cards")
+                        .addClass("showing");
+                    $(this)
+                        .css({
+                            zIndex: zindex
+                        })
+                        .addClass("d-card-show");
+
+                    zindex++;
+                }
+
+            });
+        });
+    </script>
+    <script>
+        // JavaScript code
+        function search_kp() {
+            let input = document.getElementById('searchitem').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('mytile');
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                } else {
+                    x[i].style.display = "block";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
