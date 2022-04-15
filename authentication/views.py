@@ -659,14 +659,14 @@ def search(request):
         searched=request.POST['searched']
     # print(searched)
     if(searched!=""):
-        graphdb=GraphDatabase.driver(uri = "bolt://localhost:7687", auth=("neo4j", "admin")) #Connection to neo4j
+        graphdb=GraphDatabase.driver(uri = "bolt://localhost:11003", auth=("neo4j", "admin")) #Connection to neo4j
         session=graphdb.session()
         q3='''CALL db.index.fulltext.queryNodes("kpindex", "%s") YIELD node RETURN node''' %(searched)   #This is fulltext search query
         defectdata=session.run(q3) 
     # print(*nodes)
     # we are showing results on page name defect
     else:
-        graphdb=GraphDatabase.driver(uri = "bolt://localhost:7687", auth=("neo4j", "admin"))
+        graphdb=GraphDatabase.driver(uri = "bolt://localhost:11003", auth=("neo4j", "admin"))
         session=graphdb.session()
         q2='''match(node:knowledge) return node'''
         defectdata=session.run(q2)

@@ -178,7 +178,7 @@ img { max-width: 100%; height: auto; }
         }
         
         .flex-child-element2 {
-            flex: 3.5;
+            flex: 3.3;
             border: 2px solid #ffffff;
             margin: 2px;
             margin-left: 0px;
@@ -399,7 +399,7 @@ img { max-width: 100%; height: auto; }
         }
         {% comment %} .container{width: 250px; height: 38px; margin: 100px auto;} {% endcomment %}
 
-        .collapsible {
+    .collapsible {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 16px;
     text-align: left;
@@ -416,6 +416,11 @@ img { max-width: 100%; height: auto; }
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
   .active, .collapsible:hover {
     background-color: #d3d3d3;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+
   }
   
   /* Style the collapsible content. Note: hidden by default */
@@ -424,50 +429,68 @@ img { max-width: 100%; height: auto; }
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;
+    width: 85%;
+    background-color: #d3d3d3;
   }
 
 div label input {margin-right: 100px;}
 
 .cat{
-  margin: 4px;
-  background-color: #104068;
-  border-radius: 4px;
-  border: 1px solid #fff;
-  overflow: hidden;
-  float: left;
+    margin: 1px;
+    background-color: #00a0ff;
+    border: 1px solid #fff;
+    overflow: hidden;
+    float: left;
+    border-radius: 20px;
+
+   
+  }
+  .mr-sm-2{
+      margin-left: 20%;
+  }
+  .cat label {
+    float: left; line-height: 1.5em;
+    width: 6.0em; height: 1.3em;
+    
+  }
+  
+  .cat label span {
+    text-align: center;
+    padding: 1px 0;
+    display: block;
+  }
+  
+  .cat label input {
+    position: absolute;
+    display: none;
+    color: #fff !important;
+  }
+  
+  /* selects all of the text within the input element and changes the color of the text */
+  .cat label input + span{
+    color: #fff;
+    font-size: 12px;
+   
 }
-.mr-sm-2{
-    margin-left: 20%;
-}
-.cat label {
-  float: left; line-height: 2.0em;
-  width: 6.0em; height: 2.0em;
-}
-
-.cat label span {
-  text-align: center;
-  padding: 3px 0;
-  display: block;
-}
-
-.cat label input {
-  position: absolute;
-  display: none;
-  color: #fff !important;
-}
-
-/* selects all of the text within the input element and changes the color of the text */
-.cat label input + span{color: #fff;}
+  
+  
+  /* This will declare how a selected input will look giving generic properties */
+  .cat input:checked + span {
+      text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+      height:100%;
+      background-color: #104068;
+      width:100%;
+     
+  }
+  
+  .action input:checked + span {
+      background-color: #104068;
+      width:100%;
+      height:100%;
+      
+  }
 
 
-/* This will declare how a selected input will look giving generic properties */
-.cat input:checked + span {
-    color: #ffffff;
-    text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
-}
-
-
-.action input:checked + span{background-color: #F75A1B;}
     </style>
     {% comment %} <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
     <link rel="icon" href="https://klaindustries.com/wp-content/uploads/2017/07/Light-bulb-icon.png" width="300" height="300" type="image/icon type">
@@ -537,10 +560,10 @@ div label input {margin-right: 100px;}
         <form class="form-inline my-2 my-lg-0" method=POST  >
           {%csrf_token%}
         
-
+            <hr>
           <center>
             <h4><strong>KNOWLEDGE TAGS</strong> </h4> 
-          </center>
+          </center><hr>
 
           <br><br><br><br>
 
@@ -699,8 +722,9 @@ div label input {margin-right: 100px;}
             <center>
                 <h4><strong>KNOWLEDGE TYPES</strong> </h4>
             </center>
+            <br>
             
-            <form class="form-inline my-2 my-lg-0" method=POST  >
+            <form class="form-block my-2 my-lg-0" method=POST  >
               {%csrf_token%}
                 <input type="checkbox" style="float: right; margin:8px" id="defect" name="ptypes" value="defect" onclick="tags_display()">
                 <label for="defect"> Defect</label><br>
@@ -717,13 +741,15 @@ div label input {margin-right: 100px;}
 
             </form>
 
+            <br>
             <center>
              <h4><strong>PRODUCTS</strong> </h4> 
             </center>
 
-            <hr>
+            
+            <br>
 
-            <form class="form-inline my-2 my-lg-0" method=POST  >
+            <form class="form-block my-2 my-lg-0" method=POST  >
               {%csrf_token%}
                 <input type="checkbox" style="float: right; margin:8px" id="product1" name="prod" value="CData Drivers" onclick="tags_display()">
                 <label for="product1"> Cdata Drivers</label><br>
@@ -770,12 +796,11 @@ div label input {margin-right: 100px;}
                 {% comment %} <a class="nav-link" href="/" style="color:white ; width:200% ; height:200% ;"><strong><i class="fa fa-fw fa-home"></i>Home</strong><span class="sr-only">(current)</span></a> {% endcomment %}
                 <br><br>
                 <div class="search-container" style="display:inline">
-                    <form action="">
-                        <input type="text" placeholder="Search..." name="search" id="searchitem" onkeyup="search_kp()">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-
+                    <form class="form-inline my-2 my-lg-0" method=POST action={% url 'search'%}>
+                        {%csrf_token%}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search Knowledges" aria-label="Search" name="searched" style="width:50%;">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fa fa-fw fa-search"></i></button> &nbsp &nbsp&nbsp&nbsp
                     </form>
-
                 </div>
                 <br><br>
                     {% for x in defectdata %}
@@ -826,52 +851,7 @@ for (i = 0; i < coll.length; i++) {
     
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
     </script>
-    <script>
-        $(document).ready(function() {
-            var zindex = 10;
 
-            $("div.card").click(function(e) {
-                e.preventDefault();
-
-                var isShowing = false;
-
-                if ($(this).hasClass("d-card-show")) {
-                    isShowing = true
-                }
-
-                if ($("div.dashboard-cards").hasClass("showing")) {
-                    $("div.card.d-card-show")
-                        .removeClass("d-card-show");
-
-                    if (isShowing) {
-                        $("div.dashboard-cards")
-                            .removeClass("showing");
-                    } else {
-                        $(this)
-                            .css({
-                                zIndex: zindex
-                            })
-                            .addClass("d-card-show");
-
-                    }
-
-                    zindex++;
-
-                } else {
-                    $("div.dashboard-cards")
-                        .addClass("showing");
-                    $(this)
-                        .css({
-                            zIndex: zindex
-                        })
-                        .addClass("d-card-show");
-
-                    zindex++;
-                }
-
-            });
-        });
-    </script>
     <script>
         // JavaScript code
         function search_kp() {
@@ -887,12 +867,19 @@ for (i = 0; i < coll.length; i++) {
             }
         }
     </script>
+    
+
+    <script>
+
 
     
+    </script>
     <script>
         // JavaScript code to filter knowledges by Problem Type
             
             function tags_display(){
+
+
                 let tags = [];
                 let ptypes = [];
                 let prod = [];
